@@ -6,10 +6,10 @@ const RequestInterceptor = async (config: any) => {
   return config;
 };
 
-const TeddyApi = axios.create({
+const MarvelApi = axios.create({
   baseURL: '',
 });
 
-TeddyApi.interceptors.request.use(RequestInterceptor);
+MarvelApi.interceptors.request.use(RequestInterceptor);
 
-export default TeddyApi;
+export default MarvelApi;

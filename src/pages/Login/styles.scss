@@ -4,5 +4,56 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgb(247, 243, 237);
+    background-image: url('../../assets/login-background.jpg');
+    background-size: cover;
+    background-position: center center;
+
+    .login-box {
+        max-width: 80%;
+        width: 400px;
+        height: 400px;
+        background-color: white;
+        border: 5px solid red;
+        border-radius: 0  0 20px 20px;
+        box-shadow: 0px 0px 40px 0px black;
+
+        .login-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding-top:30px;
+
+            label {
+                float: left;
+                width: 80%;
+                text-transform: uppercase;
+                font-size: 10px;
+                color: black;
+                font-weight: bold;
+            }
+
+            input {
+                width: 80%;
+                margin-bottom: 20px;
+                height: 10px;
+                padding: 8px 0;
+                border: none;
+                border-bottom: 3px solid red;
+                outline: none;
+                font-size: 16px;
+                color: #333;
+                
+                &:focus {
+                  border-bottom-color: darkred;
+                }
+                
+              }
+        }
+
+        img {
+            width: 400px;
+            object-fit: contain;
+        }
+    }
 }
