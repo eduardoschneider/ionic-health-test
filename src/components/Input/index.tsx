@@ -1,4 +1,5 @@
 import React from 'react';
+import './styles.scss';
 
 interface InputProps {
   title: string;
@@ -15,14 +16,14 @@ const Input: React.FC<InputProps> = ({ title, value, onChange, placeholder = '',
 
   return (
     <>
-    <label>{title}</label>
-    <input
-      type={type}
-      value={value}
-      onChange={handleChange}
-      placeholder={placeholder}
-      className="input"
-    />
+      <label className="label">{title}</label>
+      <input
+        type={type}
+        value={value}
+        onChange={handleChange}
+        placeholder={placeholder}
+        className="input"
+      />
     </>
   );
 };

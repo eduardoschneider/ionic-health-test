@@ -1,6 +1,7 @@
 import './styles.scss';
 import MarvelLogo from '@assets/marvel-logo.svg';
 import Input from '@components/Input'
+import Button from '@components/Button';
 import React from 'react';
 
 interface LoginForm {
@@ -31,7 +32,7 @@ const Login: React.FC = () => {
         <form className="login-container" onSubmit={handleSubmit}>
           <Input title="e-mail" value={login.username} onChange={(value) => handleChange('username', value)}></Input>
           <Input title="senha" type="password" value={login.password} onChange={(value) => handleChange('password', value)}></Input>
-          <button type="submit">Entrar</button>
+          <Button type="submit">ENTRAR</Button>
         </form>
       </div>
     </div>
