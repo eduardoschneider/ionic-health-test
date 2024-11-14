@@ -18,6 +18,7 @@ const Input: React.FC<InputProps> = ({ title, value, onChange, placeholder = '',
     <>
       <label className="label">{title}</label>
       <input
+        required
         type={type}
         value={value}
         onChange={handleChange}

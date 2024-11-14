@@ -1,18 +1,21 @@
+@use '@utils/colors' as *;
+
 .button {
   width: 80%;
-  background-color: rgb(101, 101, 245);
+  background-color: $purple-1;
   border:none;
   cursor: pointer;
   color: white;
   font-size: 14px;
   font-weight: bold;
   letter-spacing:3px;
+  border-radius: 30px;
   height: 40px;
   transition: .6s ease-in-out;
 
   &:hover {
     transition: .6s ease-in-out;
-    border-radius: 15px;
-    background-color: rgb(65, 65, 182);
+    border-radius: 5px;
+    background-color: $purple-1-hover;
   }
 }
