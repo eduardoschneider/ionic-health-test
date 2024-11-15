@@ -1,23 +1,23 @@
 import DummyApi from '@utils/DummyAPI';
 import { AxiosResponse } from 'axios';
+import Swal from 'sweetalert2'
 
 interface LoginData {
   username: string;
   password: string;
 }
 
-type AfterCallback = () => void;
-
-export const handleLogin = async (data: LoginData, after: AfterCallback | null): Promise<AxiosResponse<any>> => {
+export const handleLogin = async (data: LoginData): Promise<AxiosResponse<any>> => {
   try {
     const response = await DummyApi.post('/login', data);
-    if (after) {
-      after();
-    }
     return response.data;
-  } catch (error) {
-    console.error('Erro ao fazer o POST:', error);
-    //TODO: MENSAGEM DE ERRO
+  } catch (error: any) {
+    Swal.fire({
+      title: 'Erro',
+      text: 'Usuário ou senha incorretos.',
+      icon: 'error',
+      confirmButtonText: 'Tentar novamente'
+    })
     throw error;
   }
 };

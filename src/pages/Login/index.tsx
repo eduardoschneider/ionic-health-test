@@ -2,6 +2,7 @@ import './styles.scss';
 import MarvelLogo from '@assets/marvel-logo.svg';
 import Input from '@components/Input'
 import Button from '@components/Button';
+import { useCookies } from 'react-cookie';
 import { handleLogin } from '@services/DummyService';
 import React from 'react';
 
@@ -16,6 +17,7 @@ interface LoginForm {
 
 const Login: React.FC = () => {
   const [login, setLogin] = React.useState<LoginForm>({ username: '', password: '' });
+  const [_, setCookie] = useCookies(['username']);
 
   const handleChange = (key: keyof LoginForm, value: string) => {
     setLogin((prev) => ({
@@ -24,11 +26,15 @@ const Login: React.FC = () => {
     }));
   };
 
-  const  handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Dados de login:', login);
-    handleLogin(login, null);
+    let response = await handleLogin(login);
+    saveCookies(response);
   };
+
+  const saveCookies = (e: any) => {
+    setCookie('username', e.firstName + ' ' + e.lastName, { path: '/' });
+  }
 
   return (
     <div className="container">
@@ -37,6 +43,10 @@ const Login: React.FC = () => {
         <form className="login-container" onSubmit={(e) => handleSubmit(e)}>
           <Input title="nome de usuário" type="text" value={login.username} onChange={(value) => handleChange('username', value)}></Input>
           <Input title="senha" type="password" value={login.password} onChange={(value) => handleChange('password', value)}></Input>
+          <div className="policy-checkbox">
+            <input type="checkbox"></input>
+            <label>Concordo com os <a>termos de uso e políticas de privacidade</a>.</label>
+          </div>
           <Button type="submit">ENTRAR</Button>
         </form>
       </div>
