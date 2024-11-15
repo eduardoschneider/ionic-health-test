@@ -10,6 +10,37 @@
   position: relative;
   padding-bottom: 30px;
 
+  .search {
+    width: 50%;
+    position: relative;
+
+    input {
+        height: 35px;
+        width: 100%;
+        border-radius: 5px;
+        border:none;
+        font-size :17px;
+        padding-left: 10px;
+
+        &:disabled {
+            background-color: white;
+        }
+    }
+
+    button {
+        top: 8px;
+        right: 0px;
+        height: 20px;
+        font-size: 10px;
+        position: absolute;
+        cursor: pointer;
+        background-color: $red-1;
+        border:none;
+        color: white;
+        border-radius: 10px;
+    }
+  }
+
   .card-list {
     margin-top:20px;
     padding-bottom:80px;

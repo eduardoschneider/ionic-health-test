@@ -8,7 +8,7 @@ const User: React.FC = () => {
     const [cookie, setCookie, removeCookie] = useCookies(["username"]);
 
     const handleRemoveCookie = () => {
-        removeCookie("username"); // Remove o cookie "user"
+        removeCookie("username");
       };
 
     return (
