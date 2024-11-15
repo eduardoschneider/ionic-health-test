@@ -51,6 +51,7 @@
     align-items: center;
     justify-content: center;
     overflow: auto;
+    scrollbar-width: none;
   }
 
   .paginator {
@@ -70,6 +71,21 @@
 
 @media (max-width: 900px) {
     .list-container {
-        height: 80%;
+        height: 95%;
+
+        .search {
+          width: 100%;
+          
+          input {
+            margin-left:-10px;
+          }
+
+          button {
+            height: 100%;
+            top:0;
+            right:-10px;
+            border-radius: 0px;
+          }
+        }
     }
 }

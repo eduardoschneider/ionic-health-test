@@ -35,11 +35,11 @@ const CharacterList: React.FC = () => {
   const clearSearch = () => {
     setSearch('');
     setLateSearch('');
-    fetchItems(currentPage, '');
+    //fetchItems(currentPage, '');
   }
 
   React.useEffect(() => {
-    fetchItems(currentPage, lateSearch);
+    //fetchItems(currentPage, lateSearch);
   }, [currentPage]);
 
   React.useEffect(() => {
@@ -54,7 +54,7 @@ const CharacterList: React.FC = () => {
 
   React.useEffect(() => {
     if (lateSearch != '') {
-      fetchItems(currentPage, lateSearch);
+      //fetchItems(currentPage, lateSearch);
     }
   }, [lateSearch]);
 

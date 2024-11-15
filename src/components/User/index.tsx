@@ -16,7 +16,7 @@ const User: React.FC = () => {
             <img className="picture" src={Hero} alt="Perfil de Herói"></img>
             <span><a>Bem-vindo,</a>
                 <br />
-                <strong>{cookie.username}</strong>
+                <strong className="name">{cookie.username}</strong>
             </span>
             <a href="/" onClick={() => handleRemoveCookie()} className="logout">
                 <img src={Logout} alt="Botão de sair"></img>
