@@ -1,0 +1,29 @@
+@use '@utils/colors' as *;
+
+.pagination {
+    color: white;
+    font-size: 12px;
+    button {
+        width: 80px;
+        background-color: $purple-1;
+        margin-left:10px;
+        margin-right: 10px;
+        border:none;
+        cursor: pointer;
+        color: white;
+        font-size: 12px;
+        letter-spacing:1px;
+        border-radius: 30px;
+        height: 35px;
+        transition: .6s ease-in-out;
+      
+        &:hover {
+          background-color: $purple-1-hover;
+        }
+
+        &:disabled {
+            background-color: gray;
+            cursor: default;
+        }
+      }
+}

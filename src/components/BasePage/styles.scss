@@ -7,14 +7,21 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 
     .base-page-container {
         width: calc(90% - 100px);
-        height: calc(90% - 90px);
+        height: calc(90% - 50px);
         background-color: $red-1-dark;
         border-radius: 50px;
         padding:50px;
         padding-top:40px;
         box-shadow: 0px 0px 30px 0px black;
+        overflow: hidden;
+    }
+
+    .base-content {
+        width: 100%;
+        height: calc(85%);
     }
 }

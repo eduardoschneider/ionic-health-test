@@ -1,10 +1,10 @@
 import MarvelApi from '@utils/MarvelAPI';
 import { AxiosResponse } from 'axios';
 
-  export const getAll = async (): Promise<AxiosResponse<any>> => {
+  export const getAllCharacters = async (page: number): Promise<AxiosResponse<any>> => {
     try {
-      const response = await MarvelApi.get('/');
-      return response;
+      const response = await MarvelApi.get('characters?limit=16&offset=' + ((page - 1) * 16));
+      return response.data;
     } catch (error) {
       console.error('Erro ao fazer o GET:', error);
       throw error;

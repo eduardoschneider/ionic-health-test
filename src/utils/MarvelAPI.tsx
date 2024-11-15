@@ -1,15 +1,19 @@
 import axios from 'axios';
+import md5 from 'md5';
 
-const RequestInterceptor = async (config: any) => {
+const privateKey = '779a756b8ee8b15a3794b6157248d3154bab4978';
+const publicKey = '97d7ad971f04e4660c416472f846f4ff';
 
-  config.headers.ContentType = 'application/json';
-  return config;
-};
+const time = Number(new Date());
+const hash = md5(time + privateKey + publicKey);
 
 const MarvelApi = axios.create({
-  baseURL: '',
+  baseURL: 'http://gateway.marvel.com/v1/public/',
+  params: {
+    ts: time,
+    apikey: publicKey,
+    hash
+  }
 });
-
-MarvelApi.interceptors.request.use(RequestInterceptor);
 
 export default MarvelApi;

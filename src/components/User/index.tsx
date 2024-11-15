@@ -5,7 +5,7 @@ import { useCookies } from 'react-cookie';
 
 const User: React.FC = () => {
 
-    const [_, setCookie, removeCookie] = useCookies(["username"]);
+    const [cookie, setCookie, removeCookie] = useCookies(["username"]);
 
     const handleRemoveCookie = () => {
         removeCookie("username"); // Remove o cookie "user"
@@ -16,7 +16,7 @@ const User: React.FC = () => {
             <img className="picture" src={Hero} alt="Perfil de Herói"></img>
             <span><a>Bem-vindo,</a>
                 <br />
-                Eduardo
+                <strong>{cookie.username}</strong>
             </span>
             <a href="/" onClick={() => handleRemoveCookie()} className="logout">
                 <img src={Logout} alt="Botão de sair"></img>
