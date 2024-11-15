@@ -1,0 +1,66 @@
+@use "@utils/colors" as *;
+
+.header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  align-content: center;
+  flex-wrap: wrap;
+
+  .options {
+    .highlight {
+      font-weight: bold;
+      background-color: $red-1-dark2;
+    }
+
+    a {
+      padding: 10px 20px 10px 20px;
+      border-radius: 10px;
+      background-color: $red-1-dark;
+      margin-left: 15px;
+      margin-right: 15px;
+      color: $red-1-light;
+      text-decoration: none;
+      cursor: pointer;
+
+      &:hover {
+        color: $red-1-light;
+        background-color: $red-1-dark2;
+      }
+    }
+  }
+
+  .divider {
+    width: 100%;
+    margin: auto;
+    height: 1px;
+    background-color: $red-1-light;
+    opacity: 0.3;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 700px) {
+  .header {
+    flex-direction: column-reverse;
+    justify-content: center;
+    margin-bottom: 30px;
+
+    .options {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+      text-align: center;
+      a {
+        text-align: center;
+      }
+    }
+
+    .divider {
+      display: none;
+    }
+  }
+}

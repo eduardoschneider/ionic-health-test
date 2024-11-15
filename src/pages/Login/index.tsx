@@ -4,6 +4,7 @@ import Input from '@components/Input'
 import Button from '@components/Button';
 import { useCookies } from 'react-cookie';
 import { handleLogin } from '@services/DummyService';
+import { useNavigate } from "react-router-dom";
 import React from 'react';
 
 //Usuário de teste: 
@@ -16,6 +17,9 @@ interface LoginForm {
 }
 
 const Login: React.FC = () => {
+
+  const navigate = useNavigate();
+
   const [login, setLogin] = React.useState<LoginForm>({ username: '', password: '' });
   const [_, setCookie] = useCookies(['username']);
 
@@ -30,6 +34,7 @@ const Login: React.FC = () => {
     e.preventDefault();
     let response = await handleLogin(login);
     saveCookies(response);
+    navigate('/dashboard');
   };
 
   const saveCookies = (e: any) => {

@@ -1,0 +1,35 @@
+@use '@utils/colors' as *;
+
+.user {
+    padding-left: 20px;
+    padding-right:25px;
+    padding-top:5px;
+    padding-bottom: 5px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $red-1-light;
+    background-color:  $red-1-dark2;
+
+    a {
+        font-size:12px;
+    }
+
+    .picture {
+        width: 40px;
+        margin-right:10px;
+    }
+
+    .logout {
+        color: red;
+        margin-right: -10px;
+        margin-left:15px;
+        margin-top:3px;
+        cursor: pointer;
+
+        img {
+            width: 25px;
+        }
+    }
+}

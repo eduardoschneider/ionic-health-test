@@ -1,10 +1,10 @@
 import './styles.scss';
 
-function Dashboard() {
+const Dashboard: React.FC = () => {
 
   return (
-    <div className="container">
-
+    <div>
+      bem-vindo
     </div>
   );
 };
