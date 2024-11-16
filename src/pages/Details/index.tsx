@@ -40,6 +40,9 @@ const Details: React.FC = () => {
             <img src={item?.thumbnail?.path + '.' + item?.thumbnail?.extension}></img>
             <span className="name">{item?.name}</span>
             <span className="description">{item?.description}</span>
+            <a className="next">{item?.next?.name}</a>
+            <a className="previous">{item?.previous?.name}</a>
+
             <span className="modified">
               <a>Última modificação</a> <br />
               {format(parseISO(item.modified), 'dd/MM/yyyy HH:mm')}
@@ -48,7 +51,7 @@ const Details: React.FC = () => {
           
           <div className="content">
 
-            { getPathSegment() != 'comics' &&
+            { item?.comics &&
             <div className="block">
               <span className="title">Aparece nas seguintes comics:</span>
               <div className="block-content">
@@ -61,7 +64,7 @@ const Details: React.FC = () => {
             </div>
             }
 
-            { getPathSegment() != 'stories' &&
+            { item?.stories &&
             <div className="block">
               <span className="title">Aparece nas seguintes histórias:</span>
               <div className="block-content">
@@ -74,7 +77,7 @@ const Details: React.FC = () => {
             </div>
             }
 
-            { getPathSegment() != 'events' &&
+            { item?.events &&
             <div className="block">
               <span className="title">Aparece nos seguintes eventos:</span>
               <div className="block-content">
@@ -87,12 +90,12 @@ const Details: React.FC = () => {
             </div>
             }
 
-            { getPathSegment() != 'items' &&
+            { item?.characters &&
             <div className="block">
               <span className="title">Aparece os seguintes personagens:</span>
               <div className="block-content">
                 {
-                  item?.items?.items.map((item:any, index:number) => {
+                  item?.characters?.items.map((item:any, index:number) => {
                     return <span key={index} className="card-content events">{item.name}</span>
                   })
                 }
@@ -100,13 +103,27 @@ const Details: React.FC = () => {
             </div>
             }
 
-            { getPathSegment() != 'series' &&
+            { item?.series &&
             <div className="block">
               <span className="title">Aparece nas seguintes séries:</span>
               <div className="block-content">
                 {
                   item?.series.items.map((item:any, index:number) => {
                     return <span key={index} className="card-content series">{item.name}</span>
+                  })
+                }
+              </div>
+            </div>
+            }
+
+            
+            { item?.creators &&
+            <div className="block">
+              <span className="title">Criadores:</span>
+              <div className="block-content">
+                {
+                  item?.creators.items.map((item:any, index:number) => {
+                    return <span key={index} className="card-content creators">{item.name}</span>
                   })
                 }
               </div>

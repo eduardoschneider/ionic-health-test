@@ -76,12 +76,14 @@
         overflow: auto;
         scrollbar-width: none;
         display: flex;
+        flex-wrap: wrap;
 
         .block {
             display: flex;
             flex-direction: column;
             padding: 10px;
-            width: calc(25% - 20px);
+            width: 15%;
+            min-width: 180px;
             background-color: rgba(0, 0, 0, 0.405);
             margin-left:20px;
             margin-right:20px;
@@ -127,13 +129,17 @@
                     &.series {
                         background-color: $green-1;
                     }
+
+                    &.creators {
+                        background-color: $gray-1;
+                    }
                 }
             }
         }
     }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1200px) {
     .information, .content {
         width: 100% !important;
         border-radius: 0px !important;
