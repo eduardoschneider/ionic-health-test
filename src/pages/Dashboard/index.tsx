@@ -29,13 +29,12 @@ const Dashboard: React.FC = () => {
       <section className="project-tech">
         <h2>Tecnologias Utilizadas</h2>
         <p>
-          A interface foi construída de maneira intuitiva, empregando boas práticas de desenvolvimento em React,
-          como:
+          A interface foi construída de maneira intuitiva, empregando boas práticas de desenvolvimento em React e Typescript.
         </p>
         <ul>
           <li>Hooks para gerenciamento de estado.</li>
           <li>Chamadas assíncronas à API da Marvel.</li>
-          <li>Operadores lógicos para exibição condicional de conteúdo.</li>
+          <li>Objetos, estados e funções com tipos bem definidos.</li>
         </ul>
       </section>
       <section className="project-advantages">

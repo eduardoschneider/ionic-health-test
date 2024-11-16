@@ -23,11 +23,19 @@
     width: 50%;
     margin-top:20px;
     margin-bottom:30px;
+    display: flex;
     position: relative;
 
-    input {
+    label {
+      z-index: 999;
+      top: 11px;
+      left: 6px;
+      font-size:13px;
+      position: absolute;
+    }
+
+    .search-input, .modified-input {
         height: 35px;
-        width: 100%;
         border-radius: 5px;
         border:none;
         font-size :17px;
@@ -38,9 +46,20 @@
         }
     }
 
-    button {
+    .search-input {
+      width: 100%;
+    }
+
+    .modified-input {
+      margin-right: 10px;
+      text-align: right;
+      padding-right: 5px;
+      font-weight: bold;
+    }
+
+    .reset-button {
         top: 8px;
-        right: 0px;
+        right: 10px;
         height: 20px;
         font-size: 10px;
         position: absolute;
@@ -48,7 +67,7 @@
         background-color: $red-1;
         border:none;
         color: white;
-        border-radius: 10px;
+        border-radius: 5px;
     }
   }
 
@@ -106,9 +125,16 @@
 
         .search {
           width: 90%;
+          display: flex;
+          flex-direction: column;
+
+          label {
+            left: 0px;
+          }
           
           input {
             margin-left:-10px;
+            margin-bottom: 5px;
           }
 
           button {

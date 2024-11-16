@@ -4,6 +4,8 @@ import Loading from '@components/Loading';
 import { getAll } from '@services/MarvelService';
 import { Link } from 'react-router-dom';
 import Card from '@components/Card';
+import 'react-datepicker/dist/react-datepicker.css'
+import DatePicker from "react-datepicker";
 import Pagination from '@components/Pagination';
 import { getURLParam, updateURLParams, deleteURLParams, getPathSegment } from '@utils/Helpers';
 
@@ -13,7 +15,9 @@ const List: React.FC = () => {
 
   /* SEARCH SEM BOTÃO */
   const [search, setSearch] = React.useState<string>('');
+  const [startDate, setStartDate] = React.useState<Date | null>(null);
   const [_, triggerSearch] = React.useState<string>("");
+  const [__, triggerDate] = React.useState<Date | null>(null);
 
   /* PAGINATOR */
   const [currentPage, setCurrentPage] = React.useState<number>(() => {
@@ -26,10 +30,10 @@ const List: React.FC = () => {
 
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const fetchItems = React.useCallback(async (page: number, name: string) => {
+  const fetchItems = React.useCallback(async (page: number, name: string, modified: string) => {
     setIsLoading(true);
     try {
-      let response = await getAll(page, name, getPathSegment());
+      let response = await getAll(page, name, modified, getPathSegment());
       setItems(response.data.results);
       setTotalPages(Math.ceil(response.data.total / 16));
     } catch (error) {
@@ -40,12 +44,11 @@ const List: React.FC = () => {
   }, []);
 
   const clearSearch = React.useCallback(() => {
+    setStartDate(null);
     setSearch('');
     setCurrentPage(1);
-    deleteURLParams('search');
-    updateURLParams('page', '1');
-    fetchItems(1, '');
-  }, [fetchItems]);
+    deleteURLParams();
+  }, []);
 
   const handlePageChange = React.useCallback((page: number) => {
     if (page >= 1 && page <= totalPages) {
@@ -56,27 +59,35 @@ const List: React.FC = () => {
 
   /* Busca sempre que fica 0,7 segundo sem digitar (busca)*/
   React.useEffect(() => {
-    if (search !== '') { setCurrentPage(1); }
+    if (search !== '' || startDate) { setCurrentPage(1); }
 
     const handler = setTimeout(() => {
       if (search !== '') {
         updateURLParams('search', search);
         updateURLParams('page', '1');
+        triggerSearch(search);
       }
-      triggerSearch(search);
+      console.log(startDate);
+      if (startDate) {
+        updateURLParams('modified', startDate.toLocaleDateString('en-US'));
+        updateURLParams('page', '1');
+        triggerDate(startDate);
+      }
+
     }, 700);
 
     return () => {
       clearTimeout(handler);
     };
-  }, [search]);
+  }, [search, startDate]);
 
   /* Busca sempre que a URL é alterada (filtro, página)*/
   React.useEffect(() => {
     const pageFromUrl = parseInt(getURLParam('page') || '1', 10);
     const searchFromUrl = getURLParam('search');
+    const modifiedFromUrl = getURLParam('modified');
 
-    fetchItems(pageFromUrl, searchFromUrl || '');
+    fetchItems(pageFromUrl, searchFromUrl || '', modifiedFromUrl || '');
   }, [location.search, location.pathname, fetchItems]);
 
   /* Atualiza o conteúdo quando muda de contexto */
@@ -88,13 +99,20 @@ const List: React.FC = () => {
 
   return (
     <div className="list-container">
+
       <span className="search-result">
         {getURLParam('search') && `Resultados que começam com "${getURLParam('search')}"`}
+        <br/>
+        {getURLParam('modified') && `Resultados que foram alterados desde "${getURLParam('modified')}"`}
       </span>
+
       <div className="search">
-        <input disabled={isLoading} value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar por nome/título..." />
-        <button onClick={clearSearch}>Limpar busca</button>
+        <label>Modificado desde:</label>
+        <DatePicker className="modified-input" dateFormat="MM/dd/yyyy" selected={startDate} onChange={(date: any) => setStartDate(date)} />
+        <input className="search-input" disabled={isLoading} value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar por nome/título..." />
+        <button className="reset-button" onClick={clearSearch}>Limpar busca</button>
       </div>
+
       <div className="card-list">
         {isLoading ? (
           <Loading />
@@ -108,6 +126,7 @@ const List: React.FC = () => {
           ))
         )}
       </div>
+
       <div className="paginator">
         <Pagination
           loading={isLoading}

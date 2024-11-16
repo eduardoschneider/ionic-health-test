@@ -26,12 +26,12 @@ const Login: React.FC = () => {
   const [_, setCookie] = useCookies(['username']);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
-  const handleChange = (key: keyof LoginForm, value: string) => {
+  const handleChange = React.useCallback((key: keyof LoginForm, value: string) => {
     setLogin((prev) => ({
       ...prev,
       [key]: value,
     }));
-  };
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
