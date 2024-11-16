@@ -1,19 +1,27 @@
 @use '@utils/colors' as *;
 
 .character-profile {
-    background-color: green;
     display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
     height: 100%;
+    border-radius: 20px;
+    overflow: auto;
+    scrollbar-width: none;
 
     .information {
-        background-color: blue;
-        width: 20%;
-        height: calc(100% - 20px);
+        border-radius: 20px 0px 0px 20px;
+        background-color: rgba(0, 0, 0, 0.405);
+        width: calc(20% - 1px);
+        min-width: 200px;
+        height: 100%;
         display: flex;
         align-items: center;
         justify-content: flex-start;
         flex-direction: column;
-        padding-top:20px;
+        position: relative;
+        
         color: white;
 
         .name {
@@ -25,17 +33,21 @@
         .description {
             text-align: center;
             font-size: 12px;
+            line-height: 19px;
             padding: 10px;
         }
 
         img {
-            width: 150px;
-            border-radius: 100%;
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
         }
 
         .modified {
-            background-color:$purple-1;
-            padding: 7px;
+            position: absolute;
+            bottom:20px;
+            background-color:$purple-1-hover;
+            padding: 12px 20px 12px 20px;
             border-radius: 10px;
             display: flex;
             align-items: center;
@@ -51,6 +63,82 @@
                 line-height: 5px;
                 text-align: center;
              }
+        }
+    }
+    
+    .content {
+        width: 80%;
+        height: 100%;
+        min-width: 200px;
+        background-color: rgba(0, 0, 0, 0.305);
+        border-radius: 0px 20px 20px 0px;
+        overflow: auto;
+        scrollbar-width: none;
+        display: flex;
+
+        .block {
+            display: flex;
+            flex-direction: column;
+            padding: 10px;
+            margin-bottom: 10px;
+            width: 25%;
+            height: 100%;
+
+            .title {
+                font-size: 13px;
+                color: white;
+                padding: 6px;
+            }
+
+            .block-content {
+                display: flex;
+                flex-wrap: wrap;
+
+                .card-content {
+                    margin-left: 5px;
+                    margin-right: 5px;
+                    padding: 5px;
+                    color: white;
+                    border-radius: 5px;
+                    font-size: 12px;
+                    margin-bottom:5px;
+                    overflow: auto;
+                    scrollbar-width: none;
+
+                    &.comic {
+                        background-color: $purple-1-hover;
+                    }
+
+                    &.stories {
+                        background-color: $pink-1;
+                    }
+
+                    &.events {
+                        background-color: $orange-1;
+                    }
+
+                    &.series {
+                        background-color: $green-1;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 900px) {
+    .information, .content {
+        width: 100% !important;
+        border-radius: 0px !important;
+    }
+
+    .content {
+        flex-wrap: wrap;
+        padding-bottom:20px;
+
+        .block {
+            width: 100% !important;
+            height: auto !important;
         }
     }
 }

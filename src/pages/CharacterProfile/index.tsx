@@ -34,15 +34,60 @@ const CharacterProfile: React.FC = () => {
       {isLoading ?
         <Loading></Loading>
         :
-        <div className="information">
-          <img src={character?.thumbnail?.path + '.' + character?.thumbnail?.extension}></img>
-          <span className="name">{character?.name}</span>
-          <span className="description">{character?.description}</span>
-          <span className="modified">
-            <a>Última modificação</a> <br/>
-            {format(parseISO(character.modified), 'dd/MM/yyyy HH:mm')}
+        <>
+          <div className="information">
+            <img src={character?.thumbnail?.path + '.' + character?.thumbnail?.extension}></img>
+            <span className="name">{character?.name}</span>
+            <span className="description">{character?.description}</span>
+            <span className="modified">
+              <a>Última modificação</a> <br />
+              {format(parseISO(character.modified), 'dd/MM/yyyy HH:mm')}
             </span>
-        </div>
+          </div>
+          <div className="content">
+            <div className="block">
+              <span className="title">Aparece nas seguintes comics:</span>
+              <div className="block-content">
+                {
+                  character?.comics.items.map((item:any, index:number) => {
+                    return <span key={index} className="card-content comic">{item.name}</span>
+                  })
+                }
+              </div>
+            </div>
+            <div className="block">
+              <span className="title">Aparece nas seguintes histórias:</span>
+              <div className="block-content">
+                {
+                  character?.stories.items.map((item:any, index:number) => {
+                    return <span key={index} className="card-content stories">{item.name}</span>
+                  })
+                }
+              </div>
+            </div>
+            <div className="block">
+              <span className="title">Aparece nos seguintes eventos:</span>
+              <div className="block-content">
+                {
+                  character?.events.items.map((item:any, index:number) => {
+                    return <span key={index} className="card-content events">{item.name}</span>
+                  })
+                }
+              </div>
+            </div>
+            <div className="block">
+              <span className="title">Aparece nas seguintes séries:</span>
+              <div className="block-content">
+                {
+                  character?.series.items.map((item:any, index:number) => {
+                    return <span key={index} className="card-content series">{item.name}</span>
+                  })
+                }
+              </div>
+            </div>
+            
+          </div>
+        </>
       }
     </div>
   );
