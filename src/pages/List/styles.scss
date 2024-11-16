@@ -44,6 +44,11 @@
         &:disabled {
             background-color: white;
         }
+
+        
+        &::placeholder {
+          font-size: 13px;
+        }
     }
 
     .search-input {
@@ -119,7 +124,10 @@
         height: 95%;
 
         .search-result {
+          position: relative;
           left: 0;
+          top: 0px;
+          font-size:15px;
           text-align: center;
         }
 
@@ -129,19 +137,25 @@
           flex-direction: column;
 
           label {
-            left: 0px;
+            top: 15px;
+            left: 10px;
           }
           
-          input {
-            margin-left:-10px;
+          .search-input, .modified-input {
+            width: calc(100% - 20px);
+            padding: 0;
+            margin-top: 5px;
             margin-bottom: 5px;
+            padding: 0 10px 0 10px;
           }
 
-          button {
-            height: 100%;
-            top:0;
-            right:-10px;
+          .reset-button {
+            position: relative;
+            height: 20px;
             border-radius: 0px;
+            font-size:13px;
+            right: 0 ;
+            width: 100%;
           }
         }
     }

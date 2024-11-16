@@ -16,8 +16,6 @@ const List: React.FC = () => {
   /* SEARCH SEM BOTÃO */
   const [search, setSearch] = React.useState<string>('');
   const [startDate, setStartDate] = React.useState<Date | null>(null);
-  const [_, triggerSearch] = React.useState<string>("");
-  const [__, triggerDate] = React.useState<Date | null>(null);
 
   /* PAGINATOR */
   const [currentPage, setCurrentPage] = React.useState<number>(() => {
@@ -29,6 +27,9 @@ const List: React.FC = () => {
   /*           */
 
   const [isLoading, setIsLoading] = React.useState(false);
+  
+  //Ativar debounce/Forçar limpeza completa
+  const [_, commit] = React.useState<{}>({});
 
   const fetchItems = React.useCallback(async (page: number, name: string, modified: string) => {
     setIsLoading(true);
@@ -44,10 +45,11 @@ const List: React.FC = () => {
   }, []);
 
   const clearSearch = React.useCallback(() => {
+    deleteURLParams();
     setStartDate(null);
     setSearch('');
     setCurrentPage(1);
-    deleteURLParams();
+    commit({});
   }, []);
 
   const handlePageChange = React.useCallback((page: number) => {
@@ -62,49 +64,41 @@ const List: React.FC = () => {
     if (search !== '' || startDate) { setCurrentPage(1); }
 
     const handler = setTimeout(() => {
-      if (search !== '') {
+      if (search !== '')
         updateURLParams('search', search);
-        updateURLParams('page', '1');
-        triggerSearch(search);
-      }
-      console.log(startDate);
-      if (startDate) {
+      
+      if (startDate)
         updateURLParams('modified', startDate.toLocaleDateString('en-US'));
+
+      if (search !== '' || startDate) {
         updateURLParams('page', '1');
-        triggerDate(startDate);
+        commit({});
       }
 
-    }, 700);
+    }, 1000);
 
-    return () => {
-      clearTimeout(handler);
-    };
+    return () => {clearTimeout(handler);};
+    
   }, [search, startDate]);
 
   /* Busca sempre que a URL é alterada (filtro, página)*/
   React.useEffect(() => {
-    const pageFromUrl = parseInt(getURLParam('page') || '1', 10);
-    const searchFromUrl = getURLParam('search');
-    const modifiedFromUrl = getURLParam('modified');
 
-    fetchItems(pageFromUrl, searchFromUrl || '', modifiedFromUrl || '');
-  }, [location.search, location.pathname, fetchItems]);
+    const pageFromUrl = parseInt(getURLParam('page') || '1', 10);
+    const searchFromUrl = getURLParam('search')  || '';
+    const modifiedFromUrl = getURLParam('modified')  || '';
+    fetchItems(pageFromUrl, searchFromUrl, modifiedFromUrl);
+
+  }, [location.search, location.pathname, fetchItems, _]);
 
   /* Atualiza o conteúdo quando muda de contexto */
   React.useEffect(() => {
-    let page = getURLParam('page') ?? '1';
-    setCurrentPage(parseInt(page, 10));
+    setCurrentPage(1);
     setSearch('');
   }, [location.pathname]);
 
   return (
     <div className="list-container">
-
-      <span className="search-result">
-        {getURLParam('search') && `Resultados que começam com "${getURLParam('search')}"`}
-        <br/>
-        {getURLParam('modified') && `Resultados que foram alterados desde "${getURLParam('modified')}"`}
-      </span>
 
       <div className="search">
         <label>Modificado desde:</label>
@@ -112,6 +106,11 @@ const List: React.FC = () => {
         <input className="search-input" disabled={isLoading} value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar por nome/título..." />
         <button className="reset-button" onClick={clearSearch}>Limpar busca</button>
       </div>
+
+      <span className="search-result">
+        {getURLParam('search') && `Resultados que começam com "${getURLParam('search')}"`}
+        {getURLParam('modified') && `e foram alterados desde ${getURLParam('modified')}`}
+      </span>
 
       <div className="card-list">
         {isLoading ? (
