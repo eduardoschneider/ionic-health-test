@@ -1,8 +1,74 @@
-.container {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgb(247, 243, 237);
-}
+@use "@utils/colors" as *;
+
+.project-container {
+    line-height: 1.6;
+    color: #333;
+    margin: 20px;
+    padding: 20px;
+    background-color: transparent;
+    border-radius: 10px;
+    scrollbar-width: none;
+    height: 90%;
+    padding-bottom: 200px;
+    overflow-y: auto;
+  
+    .project-header {
+      text-align: center;
+      background-color: $red-1-dark2;
+      color: #fff;
+      padding: 10px;
+      border-radius: 10px 10px 0px 0px;
+
+  
+      h1 {
+        font-size: 1.5em;
+        margin: 0;
+      }
+    }
+  
+    .project-intro,
+    .project-features,
+    .project-tech,
+    .project-advantages {
+      background-color: rgba(0, 0, 0, 0.405);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      padding-bottom: 5px;
+      border-radius: 10px 10px 10px 10px;
+      color: white;
+  
+      h2 {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+        padding-left:10px;
+        background-color: $red-1-dark2;
+        color: white;
+        border-radius: 10px 10px 0px 0px;
+      }
+  
+      p {
+        margin: 0 0 10px;
+        margin-left: 10px;
+        padding-top:10px;
+      }
+  
+      ul {
+        padding-left: 20px;
+        
+  
+        li {
+          margin-bottom: 4px;
+          margin-left: 10px;
+          line-height: 1.5;
+  
+          strong {
+            color: $purple-1-light;
+          }
+  
+          em {
+            color: white;
+            font-style: italic;
+          }
+        }
+      }
+    }
+  }

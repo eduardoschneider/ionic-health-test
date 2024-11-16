@@ -3,16 +3,53 @@ import './styles.scss';
 const Dashboard: React.FC = () => {
 
   return (
-    <div>
-      Este projeto foi desenvolvido para explorar e exibir informações dinâmicas do universo Marvel, utilizando a API da Marvel em conjunto com React. A aplicação permite que os usuários busquem por personagens, quadrinhos e eventos diretamente na plataforma da Marvel, proporcionando uma experiência interativa e envolvente.
-
-Ao fazer uso de parâmetros de URL, como o search, a aplicação exibe automaticamente uma frase personalizada, como "Buscando por [termo de busca]", oferecendo um feedback imediato e claro ao usuário sobre a sua consulta. Isso é feito de forma eficiente, utilizando operadores lógicos que garantem que o texto seja mostrado apenas quando um termo de pesquisa válido for passado.
-
-A interface foi construída de maneira intuitiva, empregando boas práticas de desenvolvimento em React, como a utilização de hooks para gerenciamento de estado e chamadas assíncronas à API. A estrutura modular permite fácil manutenção e escalabilidade, e a combinação com a API da Marvel oferece uma vasta gama de dados que tornam o projeto interessante e envolvente para os fãs de quadrinhos e super-heróis.
-
-Este projeto também demonstra o uso de conceitos modernos em desenvolvimento front-end, como o consumo de APIs RESTful e a manipulação de dados para criar uma experiência dinâmica e personalizada para os usuários.
-
-
+    <div className="project-container">
+      <header className="project-header">
+        <h1>Explorador do Universo Marvel</h1>
+      </header>
+      <section className="project-intro">
+        <p>
+          Este projeto foi desenvolvido para explorar e exibir informações dinâmicas do universo Marvel,
+          utilizando a API da Marvel em conjunto com React + Vite.
+        </p>
+      </section>
+      <section className="project-features">
+        <h2>Funcionalidades</h2>
+        <ul>
+          <li>
+            Permite buscar por <strong>personagens</strong> e <strong>eventos </strong>
+            diretamente na plataforma da Marvel, sendo escalável para adicionar mais conteúdo de forma simples.
+          </li>
+          <li>
+            Permite visualizar detalhes de <strong>personagens</strong> e <strong>eventos </strong>
+            diretamente na plataforma da Marvel, sendo escalável para adicionar mais conteúdo de forma simples.
+          </li>
+        </ul>
+      </section>
+      <section className="project-tech">
+        <h2>Tecnologias Utilizadas</h2>
+        <p>
+          A interface foi construída de maneira intuitiva, empregando boas práticas de desenvolvimento em React,
+          como:
+        </p>
+        <ul>
+          <li>Hooks para gerenciamento de estado.</li>
+          <li>Chamadas assíncronas à API da Marvel.</li>
+          <li>Operadores lógicos para exibição condicional de conteúdo.</li>
+        </ul>
+      </section>
+      <section className="project-advantages">
+        <h2>Diferenciais</h2>
+        <p>
+          A estrutura modular permite fácil manutenção e escalabilidade.
+          O uso da API da Marvel oferece uma vasta gama de dados, tornando o projeto interessante
+          para os fãs de quadrinhos e super-heróis.
+        </p>
+        <p>
+          Conceitos modernos de desenvolvimento front-end foram aplicados, como o consumo de APIs RESTful
+          e manipulação de dados dinâmicos.
+        </p>
+      </section>
     </div>
   );
 };

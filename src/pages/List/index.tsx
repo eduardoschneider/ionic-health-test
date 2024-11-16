@@ -79,6 +79,7 @@ const List: React.FC = () => {
   React.useEffect(() => {
     let page = getURLParam('page') ?? '1';
     setCurrentPage(parseInt(page, 10));
+    setSearch('');
   }, [location.pathname])
 
   return (
@@ -96,7 +97,8 @@ const List: React.FC = () => {
             :
             items.map((item, index) => (
               <Link key={index} to={'/dashboard/' + getPathSegment() +'/' + item.id}>
-                <Card imageSrc={item.thumbnail.path + '.' + item.thumbnail.extension} text={item.name || item.title}></Card>
+                <Card imageSrc={item.thumbnail.path + '.' + item.thumbnail.extension}
+                 text={item.name || item.title}></Card>
               </Link>
             ))
         }

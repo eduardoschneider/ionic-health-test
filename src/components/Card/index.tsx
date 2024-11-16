@@ -15,4 +15,4 @@ const Card: React.FC<CardProps> = ({ imageSrc, text }) => {
   );
 };
 
-export default Card;
+export default React.memo(Card);
