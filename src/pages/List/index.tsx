@@ -8,11 +8,12 @@ import Pagination from '@components/Pagination';
 import { getURLParam, updateURLParams, deleteURLParams, getPathSegment } from '@utils/Helpers';
 
 const List: React.FC = () => {
+
   const [items, setItems] = React.useState<any[]>([]);
 
   /* SEARCH SEM BOTÃO */
   const [search, setSearch] = React.useState<string>('');
-  const [_, setLateSearch] = React.useState<string>("");
+  const [_, triggerSearch] = React.useState<string>("");
 
   /* PAGINATOR */
   const [currentPage, setCurrentPage] = React.useState<number>(() => {
@@ -21,8 +22,9 @@ const List: React.FC = () => {
     return pageFromUrl;
   });
   const [totalPages, setTotalPages] = React.useState(1);
-  const [isLoading, setIsLoading] = React.useState(false);
   /*           */
+
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const fetchItems = React.useCallback(async (page: number, name: string) => {
     setIsLoading(true);
@@ -52,14 +54,6 @@ const List: React.FC = () => {
     }
   }, [totalPages]);
 
-  /* Busca sempre que a URL é alterada (filtro, página)*/
-  React.useEffect(() => {
-    const pageFromUrl = parseInt(getURLParam('page') || '1', 10);
-    const searchFromUrl = getURLParam('search');
-
-    fetchItems(pageFromUrl, searchFromUrl || '');
-  }, [location.search, location.pathname, fetchItems]);
-
   /* Busca sempre que fica 0,7 segundo sem digitar (busca)*/
   React.useEffect(() => {
     if (search !== '') { setCurrentPage(1); }
@@ -69,13 +63,21 @@ const List: React.FC = () => {
         updateURLParams('search', search);
         updateURLParams('page', '1');
       }
-      setLateSearch(search);
+      triggerSearch(search);
     }, 700);
 
     return () => {
       clearTimeout(handler);
     };
   }, [search]);
+
+  /* Busca sempre que a URL é alterada (filtro, página)*/
+  React.useEffect(() => {
+    const pageFromUrl = parseInt(getURLParam('page') || '1', 10);
+    const searchFromUrl = getURLParam('search');
+
+    fetchItems(pageFromUrl, searchFromUrl || '');
+  }, [location.search, location.pathname, fetchItems]);
 
   /* Atualiza o conteúdo quando muda de contexto */
   React.useEffect(() => {
@@ -90,17 +92,12 @@ const List: React.FC = () => {
         {getURLParam('search') && `Resultados que começam com "${getURLParam('search')}"`}
       </span>
       <div className="search">
-        <input 
-          disabled={isLoading} 
-          value={search} 
-          onChange={(e) => setSearch(e.target.value)} 
-          placeholder="Buscar por nome/título..."
-        />
+        <input disabled={isLoading} value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar por nome/título..." />
         <button onClick={clearSearch}>Limpar busca</button>
       </div>
       <div className="card-list">
         {isLoading ? <Loading /> : items.map((item, index) => (
-          <Link key={index} to={`/dashboard/${getPathSegment()}/${item.id}`}>
+          <Link className="card-link" key={index} to={`/dashboard/${getPathSegment()}/${item.id}`}>
             <Card imageSrc={`${item.thumbnail.path}.${item.thumbnail.extension}`} text={item.name || item.title} />
           </Link>
         ))}

@@ -66,6 +66,10 @@
     scrollbar-width: none;
     position: relative;
 
+    .card-link {
+      overflow: hidden;
+    }
+
   }
 
   .paginator {
