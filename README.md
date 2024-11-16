@@ -40,10 +40,12 @@ $ git clone https://github.com/eduardoschneider/ionic-health-test
 # Acesse seus repositórios, instale as dependencias e execute
 $ cd ionic-health-test
 $ npm install
-$ npm start
+$ npm run dev
 
 Rodando no localhost:5173
 
 ```
 ## Utilizando
-- Agora você acessa http://localhost:5172 e o projeto deve estar funcionando normalmente.
+- Agora você acessa http://localhost:5173 e o projeto deve estar funcionando normalmente.
+- Para logar, é utilizado a DummyApi de usuários, um exemplo seria:
+- Login: michaelw Senha: michaelwpass
