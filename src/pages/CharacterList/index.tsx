@@ -1,15 +1,17 @@
 import React from 'react';
 import './styles.scss';
+import Loading from '@components/Loading';
 import { getAllCharacters } from '@services/MarvelService';
 import { Link } from 'react-router-dom';
 import CharacterCard from '@components/CharacterCard';
 import Pagination from '@components/Pagination';
+import { updateURLParams, deleteURLParams } from '@utils/Helpers';
 
 const CharacterList: React.FC = () => {
 
   /* SEARCH SEM BOTÃO */
   const [search, setSearch] = React.useState<string>('');
-  const [lateSearch, setLateSearch] = React.useState<string>("");
+  const [_, setLateSearch] = React.useState<string>("");
   /*                  */
 
   /* PAGINATOR */
@@ -41,10 +43,8 @@ const CharacterList: React.FC = () => {
     setSearch('');
     setLateSearch('');
     setCurrentPage(1);
-    const params = new URLSearchParams(location.search);
-    params.delete('search');
-    params.set('page', '1');
-    window.history.replaceState(null, '', `${location.pathname}?${params.toString()}`);
+    deleteURLParams('search');
+    updateURLParams('page', '1')
     fetchItems(currentPage, '');
   }
 
@@ -62,10 +62,8 @@ const CharacterList: React.FC = () => {
     setCurrentPage(1);
     const handler = setTimeout(() => {
       if (search != '') {
-        const params = new URLSearchParams(location.search);
-        params.set('search', search);
-        params.set('page', '1');
-        window.history.replaceState(null, '', `${location.pathname}?${params.toString()}`);
+        updateURLParams('search', search);
+        updateURLParams('page', '1');
       }
       setLateSearch(search);
     }, 1000);
@@ -75,23 +73,15 @@ const CharacterList: React.FC = () => {
     };
   }, [search]);
 
-  /*
-  React.useEffect(() => {
-    if (lateSearch != '') {
-      fetchItems(currentPage, lateSearch);
-    }
-  }, [lateSearch]);
-  */
-
   return (
     <div className="list-container">
       <div className="search">
         <input disabled={isLoading} value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Digite o nome do herói..."></input>
-        <button onClick={() => clearSearch()}> Redefinir </button>
+        <button onClick={() => clearSearch()}> Limpar busca </button>
       </div>
       <div className="card-list">
         {
-          isLoading ? <></>
+          isLoading ? <Loading></Loading>
             :
             items.map((item, index) => (
               <Link key={index} to={'/dashboard/characters/' + item.id}>
@@ -107,10 +97,7 @@ const CharacterList: React.FC = () => {
           totalPages={totalPages}
           onPageChange={(page) => {
             if (page >= 1 && page <= totalPages) {
-              console.log(page);
-              const params = new URLSearchParams(location.search);
-              params.set('page', page.toString());
-              window.history.replaceState(null, '', `${location.pathname}?${params.toString()}`);
+              updateURLParams('page', page.toString());
               setCurrentPage(page);
             }
           }}
