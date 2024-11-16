@@ -1,13 +1,13 @@
 import React from 'react';
 import './styles.scss';
 import Loading from '@components/Loading';
-import { getAllCharacters } from '@services/MarvelService';
+import { getAll } from '@services/MarvelService';
 import { Link } from 'react-router-dom';
-import CharacterCard from '@components/CharacterCard';
+import Card from '@components/Card';
 import Pagination from '@components/Pagination';
 import { getURLParam, updateURLParams, deleteURLParams, getPathSegment } from '@utils/Helpers';
 
-const CharacterList: React.FC = () => {
+const List: React.FC = () => {
 
   const [items, setItems] = React.useState<any[]>([]);
 
@@ -29,7 +29,7 @@ const CharacterList: React.FC = () => {
   const fetchItems = async (page: number, name: string) => {
     setIsLoading(true);
     try {
-      let response = await getAllCharacters(page, name, getPathSegment());
+      let response = await getAll(page, name, getPathSegment());
       setItems(response.data.results);
       setTotalPages(Math.ceil(response.data.total / 16));
     } catch (error) {
@@ -96,7 +96,7 @@ const CharacterList: React.FC = () => {
             :
             items.map((item, index) => (
               <Link key={index} to={'/dashboard/' + getPathSegment() +'/' + item.id}>
-                <CharacterCard imageSrc={item.thumbnail.path + '.' + item.thumbnail.extension} text={item.name || item.title}></CharacterCard>
+                <Card imageSrc={item.thumbnail.path + '.' + item.thumbnail.extension} text={item.name || item.title}></Card>
               </Link>
             ))
         }
@@ -118,4 +118,4 @@ const CharacterList: React.FC = () => {
   );
 };
 
-export default CharacterList;
+export default List;

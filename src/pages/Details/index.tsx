@@ -1,24 +1,24 @@
 import React from 'react';
 import './styles.scss';
 import { useParams } from 'react-router-dom';
-import { getSpecificCharacter } from '@services/MarvelService';
+import { getSpecific } from '@services/MarvelService';
 import { getPathSegment } from '@utils/Helpers';
 import { parseISO, format } from 'date-fns';
 import Loading from '@components/Loading';
 
-const CharacterProfile: React.FC = () => {
+const Details: React.FC = () => {
 
   const { id } = useParams<{ id: string }>();
 
   const [isLoading, setIsLoading] = React.useState<boolean>(true);
 
-  const [character, setCharacter] = React.useState<any>();
+  const [item, setItem] = React.useState<any>();
 
-  const fetchCharacter = async () => {
+  const fetchItem = async () => {
     setIsLoading(true);
     try {
-      let response = await getSpecificCharacter(id, getPathSegment());
-      setCharacter(response.data.results[0]);
+      let response = await getSpecific(id, getPathSegment());
+      setItem(response.data.results[0]);
     } catch (error) {
       console.error("Erro ao buscar os itens:", error);
     } finally {
@@ -27,22 +27,22 @@ const CharacterProfile: React.FC = () => {
   };
 
   React.useEffect(() => {
-    fetchCharacter();
+    fetchItem();
   }, [])
 
   return (
-    <div className="character-profile">
+    <div className="item-profile">
       {isLoading ?
         <Loading></Loading>
         :
         <>
           <div className="information">
-            <img src={character?.thumbnail?.path + '.' + character?.thumbnail?.extension}></img>
-            <span className="name">{character?.name}</span>
-            <span className="description">{character?.description}</span>
+            <img src={item?.thumbnail?.path + '.' + item?.thumbnail?.extension}></img>
+            <span className="name">{item?.name}</span>
+            <span className="description">{item?.description}</span>
             <span className="modified">
               <a>Última modificação</a> <br />
-              {format(parseISO(character.modified), 'dd/MM/yyyy HH:mm')}
+              {format(parseISO(item.modified), 'dd/MM/yyyy HH:mm')}
             </span>
           </div>
           
@@ -53,7 +53,7 @@ const CharacterProfile: React.FC = () => {
               <span className="title">Aparece nas seguintes comics:</span>
               <div className="block-content">
                 {
-                  character?.comics.items.map((item:any, index:number) => {
+                  item?.comics.items.map((item:any, index:number) => {
                     return <span key={index} className="card-content comic">{item.name}</span>
                   })
                 }
@@ -66,7 +66,7 @@ const CharacterProfile: React.FC = () => {
               <span className="title">Aparece nas seguintes histórias:</span>
               <div className="block-content">
                 {
-                  character?.stories.items.map((item:any, index:number) => {
+                  item?.stories.items.map((item:any, index:number) => {
                     return <span key={index} className="card-content stories">{item.name}</span>
                   })
                 }
@@ -79,7 +79,7 @@ const CharacterProfile: React.FC = () => {
               <span className="title">Aparece nos seguintes eventos:</span>
               <div className="block-content">
                 {
-                  character?.events?.items.map((item:any, index:number) => {
+                  item?.events?.items.map((item:any, index:number) => {
                     return <span key={index} className="card-content events">{item.name}</span>
                   })
                 }
@@ -87,12 +87,12 @@ const CharacterProfile: React.FC = () => {
             </div>
             }
 
-            { getPathSegment() != 'characters' &&
+            { getPathSegment() != 'items' &&
             <div className="block">
               <span className="title">Aparece os seguintes personagens:</span>
               <div className="block-content">
                 {
-                  character?.characters?.items.map((item:any, index:number) => {
+                  item?.items?.items.map((item:any, index:number) => {
                     return <span key={index} className="card-content events">{item.name}</span>
                   })
                 }
@@ -105,7 +105,7 @@ const CharacterProfile: React.FC = () => {
               <span className="title">Aparece nas seguintes séries:</span>
               <div className="block-content">
                 {
-                  character?.series.items.map((item:any, index:number) => {
+                  item?.series.items.map((item:any, index:number) => {
                     return <span key={index} className="card-content series">{item.name}</span>
                   })
                 }
@@ -120,4 +120,4 @@ const CharacterProfile: React.FC = () => {
   );
 };
 
-export default CharacterProfile;
+export default Details;

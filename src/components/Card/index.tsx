@@ -6,7 +6,7 @@ interface CardProps {
   text: string;
 }
 
-const CharacterCard: React.FC<CardProps> = ({ imageSrc, text }) => {
+const Card: React.FC<CardProps> = ({ imageSrc, text }) => {
   return (
     <div className="card">
       <img src={imageSrc} alt={text} className="card-image" />
@@ -15,4 +15,4 @@ const CharacterCard: React.FC<CardProps> = ({ imageSrc, text }) => {
   );
 };
 
-export default CharacterCard;
+export default Card;
