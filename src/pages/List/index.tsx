@@ -96,11 +96,17 @@ const List: React.FC = () => {
         <button onClick={clearSearch}>Limpar busca</button>
       </div>
       <div className="card-list">
-        {isLoading ? <Loading /> : items.map((item, index) => (
-          <Link className="card-link" key={index} to={`/dashboard/${getPathSegment()}/${item.id}`}>
-            <Card imageSrc={`${item.thumbnail.path}.${item.thumbnail.extension}`} text={item.name || item.title} />
-          </Link>
-        ))}
+        {isLoading ? (
+          <Loading />
+        ) : items.length === 0 ? (
+          <p className="empty">Não foram encontrados registros.</p> // Mensagem quando não houver itens
+        ) : (
+          items.map((item, index) => (
+            <Link className="card-link" key={index} to={`/dashboard/${getPathSegment()}/${item.id}`}>
+              <Card imageSrc={`${item.thumbnail.path}.${item.thumbnail.extension}`} text={item.name || item.title} />
+            </Link>
+          ))
+        )}
       </div>
       <div className="paginator">
         <Pagination

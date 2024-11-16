@@ -70,6 +70,14 @@
       overflow: hidden;
     }
 
+    .empty {
+      color: white;
+      font-size: 18px;
+      background-color: $red-1-dark2;
+      padding: 10px;
+      border-radius: 10px;
+    }
+
   }
 
   .paginator {

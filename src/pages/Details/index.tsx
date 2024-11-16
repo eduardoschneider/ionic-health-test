@@ -15,118 +15,77 @@ const Details: React.FC = () => {
 
   const [item, setItem] = React.useState<any>();
 
-  const fetchItem = async () => {
+  const fetchItem = React.useCallback(async () => {
     setIsLoading(true);
     try {
-      let response = await getSpecific(id, getPathSegment());
+      const response = await getSpecific(id, getPathSegment());
       setItem(response.data.results[0]);
     } catch (error) {
       console.error("Erro ao buscar os itens:", error);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [id]);
+
+  const renderItems = (items: any[], label: string, className: string) => (
+    items && items.length > 0 && (
+      <DetailBlock label={label}>
+        {items.map((item, index) => (
+          <span key={index} className={`card-content ${className}`}>{item.name}</span>
+        ))}
+      </DetailBlock>
+    )
+  );
 
   React.useEffect(() => {
     fetchItem();
-  }, [])
+  }, [fetchItem]);
+
+  if (isLoading) {
+    return (
+    <div className="item-profile">
+      <Loading />
+    </div>
+    );
+  }
 
   return (
     <div className="item-profile">
-      {isLoading ?
-        <Loading></Loading>
-        :
-        <>
-          <div className="information">
-            <img src={item?.thumbnail?.path + '.' + item?.thumbnail?.extension}></img>
-            <span className="name">{item?.name || item?.title}</span>
-            <span className="description">{item?.description}</span>
 
-            {item?.next &&
-              <a className="navigate next">
-                <span>Próximo</span><br />
-                {item?.next?.name}
-              </a>
-            }
-            {item?.previous &&
-              <a className="navigate previous">
-                <span>Anterior</span><br />
-                {item?.previous?.name}
-              </a>
-            }
+      <div className="information">
+        <img src={item?.thumbnail?.path + '.' + item?.thumbnail?.extension}></img>
+        <span className="name">{item?.name || item?.title}</span>
+        <span className="description">{item?.description}</span>
 
-            <span className="modified">
-              <a>Última modificação</a> <br />
-              {format(parseISO(item.modified), 'dd/MM/yyyy HH:mm')}
-            </span>
-          </div>
+        {item?.next &&
+          <a className="navigate next">
+            <span>Próximo</span><br />
+            {item?.next?.name}
+          </a>
+        }
+        {item?.previous &&
+          <a className="navigate previous">
+            <span>Anterior</span><br />
+            {item?.previous?.name}
+          </a>
+        }
 
-          <div className="content">
+        <span className="modified">
+          <a>Última modificação</a> <br />
+          {format(parseISO(item.modified), 'dd/MM/yyyy HH:mm')}
+        </span>
+      </div>
 
-            {item?.comics &&
-              <DetailBlock label="Aparece nas seguintes comics">
-                  {
-                    item?.comics.items.map((item: any, index: number) => {
-                      return <span key={index} className="card-content comic">{item.name}</span>
-                    })
-                  }
-              </DetailBlock>
-            }
+      <div className="content">
 
-            {item?.stories &&
-              <DetailBlock label="Aparece nas seguintes histórias">
-                  {
-                    item?.stories.items.map((item: any, index: number) => {
-                      return <span key={index} className="card-content stories">{item.name}</span>
-                    })
-                  }
-              </DetailBlock>
-            }
+        {renderItems(item?.comics?.items, 'Aparece nas seguintes comics', 'comic')}
+        {renderItems(item?.stories?.items, 'Aparece nas seguintes histórias', 'stories')}
+        {renderItems(item?.events?.items, 'Aparece nos seguintes eventos', 'events')}
+        {renderItems(item?.characters?.items, 'Aparece nos seguintes personagens', 'characters')}
+        {renderItems(item?.series?.items, 'Aparece nas seguintes séries', 'series')}
+        {renderItems(item?.creators?.items, 'Criadores', 'creators')}
 
-            {item?.events &&
-              <DetailBlock label="Aparece nos seguintes eventos">
-                  {
-                    item?.events?.items.map((item: any, index: number) => {
-                      return <span key={index} className="card-content events">{item.name}</span>
-                    })
-                  }
-              </DetailBlock>
-            }
-
-            {item?.characters &&
-              <DetailBlock label="Aparece os seguintes personagens">
-                  {
-                    item?.characters?.items.map((item: any, index: number) => {
-                      return <span key={index} className="card-content events">{item.name}</span>
-                    })
-                  }
-              </DetailBlock>
-            }
-
-            {item?.series &&
-              <DetailBlock label="Aparece nas seguintes séries">
-                  {
-                    item?.series.items.map((item: any, index: number) => {
-                      return <span key={index} className="card-content series">{item.name}</span>
-                    })
-                  }
-              </DetailBlock>
-            }
-
-
-            {item?.creators &&
-              <DetailBlock label="Criadores">
-                  {
-                    item?.creators.items.map((item: any, index: number) => {
-                      return <span key={index} className="card-content creators">{item.name}</span>
-                    })
-                  }
-              </DetailBlock>
-            }
-
-          </div>
-        </>
-      }
+      </div>
     </div>
   );
 };
