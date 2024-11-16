@@ -18,4 +18,10 @@
     border-radius: 5px;
     background-color: $purple-1-hover;
   }
+
+  &:disabled {
+    background-color: gray;
+    opacity: .5;
+    cursor: default;
+  }
 }

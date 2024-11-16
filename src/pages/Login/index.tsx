@@ -21,6 +21,7 @@ const Login: React.FC = () => {
   const navigate = useNavigate();
 
   const [login, setLogin] = React.useState<LoginForm>({ username: '', password: '' });
+  const [terms, setTerms] = React.useState<boolean>(false);
   const [_, setCookie] = useCookies(['username']);
 
   const handleChange = (key: keyof LoginForm, value: string) => {
@@ -49,10 +50,10 @@ const Login: React.FC = () => {
           <Input title="nome de usuário" type="text" value={login.username} onChange={(value) => handleChange('username', value)}></Input>
           <Input title="senha" type="password" value={login.password} onChange={(value) => handleChange('password', value)}></Input>
           <div className="policy-checkbox">
-            <input type="checkbox"></input>
+            <input checked={terms} onChange={(e) => setTerms(e.target.checked)} type="checkbox"></input>
             <label>Concordo com os <a>termos de uso e políticas de privacidade</a>.</label>
           </div>
-          <Button type="submit">ENTRAR</Button>
+          <Button disabled={!terms} type="submit">ENTRAR</Button>
         </form>
       </div>
     </div>

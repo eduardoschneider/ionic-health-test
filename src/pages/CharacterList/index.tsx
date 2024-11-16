@@ -1,6 +1,7 @@
 import React from 'react';
 import './styles.scss';
 import { getAllCharacters } from '@services/MarvelService';
+import { Link } from 'react-router-dom';
 import CharacterCard from '@components/CharacterCard';
 import Pagination from '@components/Pagination';
 
@@ -12,7 +13,11 @@ const CharacterList: React.FC = () => {
   /*                  */
 
   /* PAGINATOR */
-  const [currentPage, setCurrentPage] = React.useState(1);
+  const [currentPage, setCurrentPage] = React.useState<number>(() => {
+    const params = new URLSearchParams(location.search);
+    const pageFromUrl = parseInt(params.get('page') || '1', 10);
+    return pageFromUrl;
+  });
   const [totalPages, setTotalPages] = React.useState(1);
   const [isLoading, setIsLoading] = React.useState(false);
   /*           */
@@ -35,28 +40,48 @@ const CharacterList: React.FC = () => {
   const clearSearch = () => {
     setSearch('');
     setLateSearch('');
-    //fetchItems(currentPage, '');
+    setCurrentPage(1);
+    const params = new URLSearchParams(location.search);
+    params.delete('search');
+    params.set('page', '1');
+    window.history.replaceState(null, '', `${location.pathname}?${params.toString()}`);
+    fetchItems(currentPage, '');
   }
 
   React.useEffect(() => {
-    //fetchItems(currentPage, lateSearch);
-  }, [currentPage]);
+
+    const params = new URLSearchParams(location.search);
+    const pageFromUrl = parseInt(params.get('page') || currentPage.toString(), 10);
+    const searchFromUrl = params.get('search');
+
+    fetchItems(pageFromUrl, searchFromUrl || '');
+    
+  }, [location.search]);
 
   React.useEffect(() => {
+    setCurrentPage(1);
     const handler = setTimeout(() => {
-      setLateSearch(search); // Atualiza a busca com o valor final
+      if (search != '') {
+        const params = new URLSearchParams(location.search);
+        params.set('search', search);
+        params.set('page', '1');
+        window.history.replaceState(null, '', `${location.pathname}?${params.toString()}`);
+      }
+      setLateSearch(search);
     }, 1000);
 
     return () => {
-      clearTimeout(handler); // Limpa o timeout anterior
+      clearTimeout(handler);
     };
   }, [search]);
 
+  /*
   React.useEffect(() => {
     if (lateSearch != '') {
-      //fetchItems(currentPage, lateSearch);
+      fetchItems(currentPage, lateSearch);
     }
   }, [lateSearch]);
+  */
 
   return (
     <div className="list-container">
@@ -69,7 +94,9 @@ const CharacterList: React.FC = () => {
           isLoading ? <></>
             :
             items.map((item, index) => (
-              <CharacterCard key={index} imageSrc={item.thumbnail.path + '.' + item.thumbnail.extension} text={item.name}></CharacterCard>
+              <Link key={index} to={'/dashboard/characters/' + item.id}>
+                <CharacterCard imageSrc={item.thumbnail.path + '.' + item.thumbnail.extension} text={item.name}></CharacterCard>
+              </Link>
             ))
         }
       </div>
@@ -80,6 +107,10 @@ const CharacterList: React.FC = () => {
           totalPages={totalPages}
           onPageChange={(page) => {
             if (page >= 1 && page <= totalPages) {
+              console.log(page);
+              const params = new URLSearchParams(location.search);
+              params.set('page', page.toString());
+              window.history.replaceState(null, '', `${location.pathname}?${params.toString()}`);
               setCurrentPage(page);
             }
           }}
