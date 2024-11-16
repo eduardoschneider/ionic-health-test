@@ -1,14 +1,18 @@
 import './styles.scss';
 import Hero from '@assets/superhero.png';
 import Logout from '@assets/log-out.png';
+import { useNavigate } from "react-router-dom";
 import { useCookies } from 'react-cookie';
 
 const User: React.FC = () => {
 
+    const navigate = useNavigate();
+
     const [cookie, setCookie, removeCookie] = useCookies(["username"]);
 
     const handleRemoveCookie = () => {
-        removeCookie("username");
+        removeCookie("username", { path: '/' });
+        navigate('/');
       };
 
     return (
@@ -18,7 +22,7 @@ const User: React.FC = () => {
                 <br />
                 <strong className="name">{cookie.username}</strong>
             </span>
-            <a href="/" onClick={() => handleRemoveCookie()} className="logout">
+            <a onClick={() => handleRemoveCookie()} className="logout">
                 <img src={Logout} alt="Botão de sair"></img>
             </a>
         </div>

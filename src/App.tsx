@@ -18,6 +18,8 @@ function App() {
               <Route index element={<Dashboard />} />
               <Route path="characters" element={<CharacterList />} />
               <Route path="characters/:id" element={<CharacterProfile />} />
+              <Route path="events" element={<CharacterList />} />
+              <Route path="events/:id" element={<CharacterProfile />} />
             </Route>
           </Route>
         </Routes>

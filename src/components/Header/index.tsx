@@ -12,8 +12,8 @@ const Header: React.FC = () => {
         <div className="header">
             <div className="options">
                 <Link to="/dashboard" className={isActive("/dashboard") ? "highlight" : ""}>Home</Link>
-                <Link to="/dashboard/characters" className={isActive("/dashboard/characters") ? "highlight" : ""}>Personagens</Link>
-                <Link to="/dashboard/events" className={isActive("/dashboard/events") ? "highlight" : ""}>Eventos</Link>
+                <Link to="/dashboard/characters?page=1" className={isActive("/dashboard/characters") ? "highlight" : ""}>Personagens</Link>
+                <Link to="/dashboard/events?page=1" className={isActive("/dashboard/events") ? "highlight" : ""}>Eventos</Link>
             </div>
             <img className="marvel-logo" src={MarvelLogo}></img>
             <div>

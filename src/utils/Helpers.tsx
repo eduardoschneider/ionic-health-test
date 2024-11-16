@@ -14,3 +14,8 @@ export const getURLParam = (param: string): string | null => {
     const params = new URLSearchParams(location.search);
     return params.get(param);
 };
+
+export const getPathSegment = (): any => {
+    const segments = ['events', 'characters', 'stories', 'comics'];
+    return segments.find((segment) => window.location.pathname.includes(segment)) || null;
+  };

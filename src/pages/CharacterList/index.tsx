@@ -5,9 +5,11 @@ import { getAllCharacters } from '@services/MarvelService';
 import { Link } from 'react-router-dom';
 import CharacterCard from '@components/CharacterCard';
 import Pagination from '@components/Pagination';
-import { getURLParam, updateURLParams, deleteURLParams } from '@utils/Helpers';
+import { getURLParam, updateURLParams, deleteURLParams, getPathSegment } from '@utils/Helpers';
 
 const CharacterList: React.FC = () => {
+
+  const [items, setItems] = React.useState<any[]>([]);
 
   /* SEARCH SEM BOTÃO */
   const [search, setSearch] = React.useState<string>('');
@@ -24,12 +26,10 @@ const CharacterList: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   /*           */
 
-  const [items, setItems] = React.useState<any[]>([]);
-
   const fetchItems = async (page: number, name: string) => {
     setIsLoading(true);
     try {
-      let response = await getAllCharacters(page, name);
+      let response = await getAllCharacters(page, name, getPathSegment());
       setItems(response.data.results);
       setTotalPages(Math.ceil(response.data.total / 16));
     } catch (error) {
@@ -48,20 +48,20 @@ const CharacterList: React.FC = () => {
     fetchItems(currentPage, '');
   }
 
+  /* Busca sempre que a URL é alterada (filtro, página)*/
   React.useEffect(() => {
-
     const params = new URLSearchParams(location.search);
     const pageFromUrl = parseInt(params.get('page') || currentPage.toString(), 10);
     const searchFromUrl = params.get('search');
 
     fetchItems(pageFromUrl, searchFromUrl || '');
 
-  }, [location.search]);
+  }, [location.search, location.pathname]);
 
+  /* Busca sempre que fica 1 segundo sem digitar (busca)*/
   React.useEffect(() => {
-    if (search != '') {
-      setCurrentPage(1);
-    }
+    if (search != '') { setCurrentPage(1); }
+
     const handler = setTimeout(() => {
       if (search != '') {
         updateURLParams('search', search);
@@ -75,13 +75,19 @@ const CharacterList: React.FC = () => {
     };
   }, [search]);
 
+  /* Atualiza a página quando muda de contexto */
+  React.useEffect(() => {
+    let page = getURLParam('page') ?? '1';
+    setCurrentPage(parseInt(page, 10));
+  }, [location.pathname])
+
   return (
     <div className="list-container">
       {
         <span className="search-result">{getURLParam('search') && 'Resultados que começam com "' + getURLParam('search') + '"'}</span>
       }
       <div className="search">
-        <input disabled={isLoading} value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Digite o nome do herói..."></input>
+        <input disabled={isLoading} value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar por nome/título..."></input>
         <button onClick={() => clearSearch()}> Limpar busca </button>
       </div>
       <div className="card-list">
@@ -89,8 +95,8 @@ const CharacterList: React.FC = () => {
           isLoading ? <Loading></Loading>
             :
             items.map((item, index) => (
-              <Link key={index} to={'/dashboard/characters/' + item.id}>
-                <CharacterCard imageSrc={item.thumbnail.path + '.' + item.thumbnail.extension} text={item.name}></CharacterCard>
+              <Link key={index} to={'/dashboard/' + getPathSegment() +'/' + item.id}>
+                <CharacterCard imageSrc={item.thumbnail.path + '.' + item.thumbnail.extension} text={item.name || item.title}></CharacterCard>
               </Link>
             ))
         }

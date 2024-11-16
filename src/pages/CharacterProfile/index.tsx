@@ -2,6 +2,7 @@ import React from 'react';
 import './styles.scss';
 import { useParams } from 'react-router-dom';
 import { getSpecificCharacter } from '@services/MarvelService';
+import { getPathSegment } from '@utils/Helpers';
 import { parseISO, format } from 'date-fns';
 import Loading from '@components/Loading';
 
@@ -16,7 +17,7 @@ const CharacterProfile: React.FC = () => {
   const fetchCharacter = async () => {
     setIsLoading(true);
     try {
-      let response = await getSpecificCharacter(id);
+      let response = await getSpecificCharacter(id, getPathSegment());
       setCharacter(response.data.results[0]);
     } catch (error) {
       console.error("Erro ao buscar os itens:", error);
@@ -44,7 +45,10 @@ const CharacterProfile: React.FC = () => {
               {format(parseISO(character.modified), 'dd/MM/yyyy HH:mm')}
             </span>
           </div>
+          
           <div className="content">
+
+            { getPathSegment() != 'comics' &&
             <div className="block">
               <span className="title">Aparece nas seguintes comics:</span>
               <div className="block-content">
@@ -55,6 +59,9 @@ const CharacterProfile: React.FC = () => {
                 }
               </div>
             </div>
+            }
+
+            { getPathSegment() != 'stories' &&
             <div className="block">
               <span className="title">Aparece nas seguintes histórias:</span>
               <div className="block-content">
@@ -65,16 +72,35 @@ const CharacterProfile: React.FC = () => {
                 }
               </div>
             </div>
+            }
+
+            { getPathSegment() != 'events' &&
             <div className="block">
               <span className="title">Aparece nos seguintes eventos:</span>
               <div className="block-content">
                 {
-                  character?.events.items.map((item:any, index:number) => {
+                  character?.events?.items.map((item:any, index:number) => {
                     return <span key={index} className="card-content events">{item.name}</span>
                   })
                 }
               </div>
             </div>
+            }
+
+            { getPathSegment() != 'characters' &&
+            <div className="block">
+              <span className="title">Aparece os seguintes personagens:</span>
+              <div className="block-content">
+                {
+                  character?.characters?.items.map((item:any, index:number) => {
+                    return <span key={index} className="card-content events">{item.name}</span>
+                  })
+                }
+              </div>
+            </div>
+            }
+
+            { getPathSegment() != 'series' &&
             <div className="block">
               <span className="title">Aparece nas seguintes séries:</span>
               <div className="block-content">
@@ -85,6 +111,7 @@ const CharacterProfile: React.FC = () => {
                 }
               </div>
             </div>
+            }
             
           </div>
         </>
