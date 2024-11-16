@@ -1,50 +1,49 @@
-# React + TypeScript + Vite
+# Marvel - Ionic Health Test
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Projeto em React consumindo a API pública da Marvel. Criado utilizando o Vite.
 
-Currently, two official plugins are available:
+## Visão Geral
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Funcionalidades
 
-## Expanding the ESLint configuration
+- **Autenticação**: Protege rotas privadas e redireciona usuários não autenticados.
+- **Lista Responsiva**: Exibição de dados com suporte a dispositivos móveis.
+- **Paginação**: Controle de navegação entre páginas de dados indexado pela URL.
+- **Pesquisa**: Pesquisa indexada pela URL.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Tecnologias Utilizadas
 
-- Configure the top-level `parserOptions` property like this:
+- **React 18**: Biblioteca para construção da interface do usuário.
+- **TypeScript**: Superset do JavaScript com tipagem estática.
+- **Axios**: Biblioteca para requisições HTTP.
+- **React Router**: Biblioteca para roteamento e navegação.
+- **SCSS**: Pré-processador CSS para estilização.
+- **Vite**: Para criação do projeto mais otimizada.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Estrutura do Projeto
+
+- **/src**: Código fonte do projeto.
+  - **/components**: Componentes reutilizáveis.
+  - **/pages**: Páginas e rotas do aplicativo.
+  - **/utils**: Funções auxiliares e configurações de API.
+  - **/services**: Funções e serviços para comunicação com APIs.
+  - **/assets**: Arquivos de imagem para estilização.
+- **/public**: Arquivos estáticos e de configuração.
+
+## Como usar
+
+### Para rodar esse projeto
+```bash
+# Clone todos os repositórios necessários, com seus micro-frontends
+$ git clone https://github.com/eduardoschneider/ionic-health-test
+
+# Acesse seus repositórios, instale as dependencias e execute
+$ cd ionic-health-test
+$ npm install
+$ npm start
+
+Rodando no localhost:5173
+
 ```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## Utilizando
+- Agora você acessa http://localhost:5172 e o projeto deve estar funcionando normalmente.
