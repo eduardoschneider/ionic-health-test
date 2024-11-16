@@ -5,7 +5,7 @@ import { getAllCharacters } from '@services/MarvelService';
 import { Link } from 'react-router-dom';
 import CharacterCard from '@components/CharacterCard';
 import Pagination from '@components/Pagination';
-import { updateURLParams, deleteURLParams } from '@utils/Helpers';
+import { getURLParam, updateURLParams, deleteURLParams } from '@utils/Helpers';
 
 const CharacterList: React.FC = () => {
 
@@ -55,11 +55,13 @@ const CharacterList: React.FC = () => {
     const searchFromUrl = params.get('search');
 
     fetchItems(pageFromUrl, searchFromUrl || '');
-    
+
   }, [location.search]);
 
   React.useEffect(() => {
-    setCurrentPage(1);
+    if (search != '') {
+      setCurrentPage(1);
+    }
     const handler = setTimeout(() => {
       if (search != '') {
         updateURLParams('search', search);
@@ -75,6 +77,9 @@ const CharacterList: React.FC = () => {
 
   return (
     <div className="list-container">
+      {
+        <span className="search-result">{getURLParam('search') && 'Resultados que começam com "' + getURLParam('search') + '"'}</span>
+      }
       <div className="search">
         <input disabled={isLoading} value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Digite o nome do herói..."></input>
         <button onClick={() => clearSearch()}> Limpar busca </button>
