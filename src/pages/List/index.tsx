@@ -8,13 +8,11 @@ import Pagination from '@components/Pagination';
 import { getURLParam, updateURLParams, deleteURLParams, getPathSegment } from '@utils/Helpers';
 
 const List: React.FC = () => {
-
   const [items, setItems] = React.useState<any[]>([]);
 
   /* SEARCH SEM BOTÃO */
   const [search, setSearch] = React.useState<string>('');
   const [_, setLateSearch] = React.useState<string>("");
-  /*                  */
 
   /* PAGINATOR */
   const [currentPage, setCurrentPage] = React.useState<number>(() => {
@@ -26,7 +24,7 @@ const List: React.FC = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   /*           */
 
-  const fetchItems = async (page: number, name: string) => {
+  const fetchItems = React.useCallback(async (page: number, name: string) => {
     setIsLoading(true);
     try {
       let response = await getAll(page, name, getPathSegment());
@@ -37,83 +35,82 @@ const List: React.FC = () => {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
-  const clearSearch = () => {
+  const clearSearch = React.useCallback(() => {
     setSearch('');
-    setLateSearch('');
     setCurrentPage(1);
     deleteURLParams('search');
-    updateURLParams('page', '1')
-    fetchItems(currentPage, '');
-  }
+    updateURLParams('page', '1');
+    fetchItems(1, '');
+  }, [fetchItems]);
+
+  const handlePageChange = React.useCallback((page: number) => {
+    if (page >= 1 && page <= totalPages) {
+      updateURLParams('page', page.toString());
+      setCurrentPage(page);
+    }
+  }, [totalPages]);
 
   /* Busca sempre que a URL é alterada (filtro, página)*/
   React.useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const pageFromUrl = parseInt(params.get('page') || currentPage.toString(), 10);
-    const searchFromUrl = params.get('search');
+    const pageFromUrl = parseInt(getURLParam('page') || '1', 10);
+    const searchFromUrl = getURLParam('search');
 
     fetchItems(pageFromUrl, searchFromUrl || '');
+  }, [location.search, location.pathname, fetchItems]);
 
-  }, [location.search, location.pathname]);
-
-  /* Busca sempre que fica 1 segundo sem digitar (busca)*/
+  /* Busca sempre que fica 0,7 segundo sem digitar (busca)*/
   React.useEffect(() => {
-    if (search != '') { setCurrentPage(1); }
+    if (search !== '') { setCurrentPage(1); }
 
     const handler = setTimeout(() => {
-      if (search != '') {
+      if (search !== '') {
         updateURLParams('search', search);
         updateURLParams('page', '1');
       }
       setLateSearch(search);
-    }, 1000);
+    }, 700);
 
     return () => {
       clearTimeout(handler);
     };
   }, [search]);
 
-  /* Atualiza a página quando muda de contexto */
+  /* Atualiza o conteúdo quando muda de contexto */
   React.useEffect(() => {
     let page = getURLParam('page') ?? '1';
     setCurrentPage(parseInt(page, 10));
     setSearch('');
-  }, [location.pathname])
+  }, [location.pathname]);
 
   return (
     <div className="list-container">
-      {
-        <span className="search-result">{getURLParam('search') && 'Resultados que começam com "' + getURLParam('search') + '"'}</span>
-      }
+      <span className="search-result">
+        {getURLParam('search') && `Resultados que começam com "${getURLParam('search')}"`}
+      </span>
       <div className="search">
-        <input disabled={isLoading} value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar por nome/título..."></input>
-        <button onClick={() => clearSearch()}> Limpar busca </button>
+        <input 
+          disabled={isLoading} 
+          value={search} 
+          onChange={(e) => setSearch(e.target.value)} 
+          placeholder="Buscar por nome/título..."
+        />
+        <button onClick={clearSearch}>Limpar busca</button>
       </div>
       <div className="card-list">
-        {
-          isLoading ? <Loading></Loading>
-            :
-            items.map((item, index) => (
-              <Link key={index} to={'/dashboard/' + getPathSegment() +'/' + item.id}>
-                <Card imageSrc={item.thumbnail.path + '.' + item.thumbnail.extension}
-                 text={item.name || item.title}></Card>
-              </Link>
-            ))
-        }
+        {isLoading ? <Loading /> : items.map((item, index) => (
+          <Link key={index} to={`/dashboard/${getPathSegment()}/${item.id}`}>
+            <Card imageSrc={`${item.thumbnail.path}.${item.thumbnail.extension}`} text={item.name || item.title} />
+          </Link>
+        ))}
       </div>
       <div className="paginator">
         <Pagination
           loading={isLoading}
           currentPage={currentPage}
           totalPages={totalPages}
-          onPageChange={(page) => {
-            if (page >= 1 && page <= totalPages) {
-              updateURLParams('page', page.toString());
-              setCurrentPage(page);
-            }
-          }}
+          onPageChange={handlePageChange}
         />
       </div>
     </div>

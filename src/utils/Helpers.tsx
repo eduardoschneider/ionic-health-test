@@ -15,7 +15,7 @@ export const getURLParam = (param: string): string | null => {
     return params.get(param);
 };
 
-export const getPathSegment = (): any => {
+export const getPathSegment = (): string | null => {
     const segments = ['events', 'characters', 'stories', 'comics'];
     return segments.find((segment) => window.location.pathname.includes(segment)) || null;
   };
