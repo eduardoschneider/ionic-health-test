@@ -78,11 +78,11 @@ const Details: React.FC = () => {
 
       <div className="content">
 
-        {renderItems(item?.comics?.items, 'Aparece nas seguintes comics', 'comic')}
-        {renderItems(item?.stories?.items, 'Aparece nas seguintes histórias', 'stories')}
-        {renderItems(item?.events?.items, 'Aparece nos seguintes eventos', 'events')}
-        {renderItems(item?.characters?.items, 'Aparece nos seguintes personagens', 'characters')}
-        {renderItems(item?.series?.items, 'Aparece nas seguintes séries', 'series')}
+        {renderItems(item?.comics?.items, 'Comics', 'comic')}
+        {renderItems(item?.stories?.items, 'Histórias', 'stories')}
+        {renderItems(item?.events?.items, 'Eventos', 'events')}
+        {renderItems(item?.characters?.items, 'Personagens', 'characters')}
+        {renderItems(item?.series?.items, 'Séries', 'series')}
         {renderItems(item?.creators?.items, 'Criadores', 'creators')}
 
       </div>
