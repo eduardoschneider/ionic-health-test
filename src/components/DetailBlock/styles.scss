@@ -1,0 +1,61 @@
+@use '@utils/colors' as *;
+
+.block {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  width: 20%;
+  min-width: 180px;
+  margin: 5px;
+  background-color: rgba(0, 0, 0, 0.405);
+  margin-left:20px;
+  margin-right:20px;
+  border-radius:20px;
+  height: calc(100% - 30px);
+  overflow: auto;
+  scrollbar-width: none;
+
+  .title {
+      font-size: 13px;
+      color: white;
+      padding: 6px;
+      margin-bottom:10px;
+  }
+
+  .block-content {
+      display: flex;
+      flex-wrap: wrap;
+
+      .card-content {
+          margin-left: 5px;
+          margin-right: 5px;
+          padding: 5px;
+          color: white;
+          border-radius: 5px;
+          font-size: 11px;
+          margin-bottom:5px;
+          overflow: auto;
+          scrollbar-width: none;
+
+          &.comic {
+              background-color: $purple-1-hover;
+          }
+
+          &.stories {
+              background-color: $pink-1;
+          }
+
+          &.events {
+              background-color: $orange-1;
+          }
+
+          &.series {
+              background-color: $green-1;
+          }
+
+          &.creators {
+              background-color: $gray-1;
+          }
+      }
+  }
+}

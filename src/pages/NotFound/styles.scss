@@ -1,0 +1,41 @@
+@use "@utils/colors" as *;
+
+.page-not-found {
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../../assets/dashboard-background.jpg');
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    position: relative;
+
+    .title {
+        color: white;
+        font-size:60px;
+        width: 300px;
+        font-weight: bold;
+        z-index: 99;
+        margin-top:20vh;
+        background-color: rgba(0, 0, 0, 0.577);
+        text-align: center;
+    }
+
+    .message {
+        width: 300px;
+        color: white;
+        font-size:30px;
+        font-weight: bold;
+        text-align: center;
+        padding: 10px;
+        z-index: 99;
+        background-color: rgba(0, 0, 0, 0.577);
+        
+    }
+
+    img {
+        position: absolute;
+        bottom: 0;
+    }
+}

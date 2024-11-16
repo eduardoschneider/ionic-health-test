@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { getSpecific } from '@services/MarvelService';
 import { getPathSegment } from '@utils/Helpers';
 import { parseISO, format } from 'date-fns';
+import DetailBlock from '@components/DetailBlock';
 import Loading from '@components/Loading';
 
 const Details: React.FC = () => {
@@ -38,7 +39,7 @@ const Details: React.FC = () => {
         <>
           <div className="information">
             <img src={item?.thumbnail?.path + '.' + item?.thumbnail?.extension}></img>
-            <span className="name">{item?.name}</span>
+            <span className="name">{item?.name || item?.title}</span>
             <span className="description">{item?.description}</span>
 
             {item?.next &&
@@ -63,82 +64,64 @@ const Details: React.FC = () => {
           <div className="content">
 
             {item?.comics &&
-              <div className="block">
-                <span className="title">Aparece nas seguintes comics:</span>
-                <div className="block-content">
+              <DetailBlock label="Aparece nas seguintes comics">
                   {
                     item?.comics.items.map((item: any, index: number) => {
                       return <span key={index} className="card-content comic">{item.name}</span>
                     })
                   }
-                </div>
-              </div>
+              </DetailBlock>
             }
 
             {item?.stories &&
-              <div className="block">
-                <span className="title">Aparece nas seguintes histórias:</span>
-                <div className="block-content">
+              <DetailBlock label="Aparece nas seguintes histórias">
                   {
                     item?.stories.items.map((item: any, index: number) => {
                       return <span key={index} className="card-content stories">{item.name}</span>
                     })
                   }
-                </div>
-              </div>
+              </DetailBlock>
             }
 
             {item?.events &&
-              <div className="block">
-                <span className="title">Aparece nos seguintes eventos:</span>
-                <div className="block-content">
+              <DetailBlock label="Aparece nos seguintes eventos">
                   {
                     item?.events?.items.map((item: any, index: number) => {
                       return <span key={index} className="card-content events">{item.name}</span>
                     })
                   }
-                </div>
-              </div>
+              </DetailBlock>
             }
 
             {item?.characters &&
-              <div className="block">
-                <span className="title">Aparece os seguintes personagens:</span>
-                <div className="block-content">
+              <DetailBlock label="Aparece os seguintes personagens">
                   {
                     item?.characters?.items.map((item: any, index: number) => {
                       return <span key={index} className="card-content events">{item.name}</span>
                     })
                   }
-                </div>
-              </div>
+              </DetailBlock>
             }
 
             {item?.series &&
-              <div className="block">
-                <span className="title">Aparece nas seguintes séries:</span>
-                <div className="block-content">
+              <DetailBlock label="Aparece nas seguintes séries">
                   {
                     item?.series.items.map((item: any, index: number) => {
                       return <span key={index} className="card-content series">{item.name}</span>
                     })
                   }
-                </div>
-              </div>
+              </DetailBlock>
             }
 
 
             {item?.creators &&
-              <div className="block">
-                <span className="title">Criadores:</span>
-                <div className="block-content">
+              <DetailBlock label="Criadores">
                   {
                     item?.creators.items.map((item: any, index: number) => {
                       return <span key={index} className="card-content creators">{item.name}</span>
                     })
                   }
-                </div>
-              </div>
+              </DetailBlock>
             }
 
           </div>
