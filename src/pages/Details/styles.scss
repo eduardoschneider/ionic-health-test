@@ -65,9 +65,7 @@
       background-color: $purple-1-hover;
       padding: 12px 20px 12px 20px;
       border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      @include centerFlex;
       flex-direction: column;
       line-height: 10px;
       font-weight: bold;

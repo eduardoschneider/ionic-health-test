@@ -4,9 +4,7 @@
   background-image: url("../../assets/dashboard-background.jpg");
   height: 100vh;
   width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include centerFlex;
   overflow: hidden;
 
   .base-page-container {

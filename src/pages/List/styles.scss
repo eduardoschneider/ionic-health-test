@@ -81,10 +81,8 @@
     width: 100%;
     height: 500px;
     max-height: 80%;
-    display: flex;
+    @include centerFlex;
     flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
     overflow: auto;
     overflow-x: hidden;
     scrollbar-width: none;
@@ -112,9 +110,7 @@
     z-index: 999;
     width: 110%;
     height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include centerFlex;
     background-color: $red-1-dark;
   }
 }

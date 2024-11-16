@@ -8,7 +8,7 @@ const User: React.FC = () => {
 
     const navigate = useNavigate();
 
-    const [cookie, setCookie, removeCookie] = useCookies(["username"]);
+    const [cookie, _, removeCookie] = useCookies(["username"]);
 
     const handleRemoveCookie = () => {
         removeCookie("username", { path: '/' });

@@ -3,9 +3,7 @@
 .container {
     width: 100vw;
     height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include centerFlex;
     background-image: url('../../assets/login-background.jpg');
     background-size: cover;
     background-position: center center;
@@ -26,9 +24,7 @@
         }
 
         .login-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            @include centerFlex;
             flex-direction: column;
             padding-top:30px;
 

@@ -18,11 +18,15 @@ const Dashboard: React.FC = () => {
         <ul>
           <li>
             Permite buscar por <strong>personagens</strong> e <strong>eventos </strong>
-            diretamente na plataforma da Marvel, sendo escalável para adicionar mais conteúdo de forma simples.
+            diretamente na plataforma da Marvel.
           </li>
           <li>
             Permite visualizar detalhes de <strong>personagens</strong> e <strong>eventos </strong>
-            diretamente na plataforma da Marvel, sendo escalável para adicionar mais conteúdo de forma simples.
+            diretamente na plataforma da Marvel.
+          </li>
+          <li>
+            Permite filtrar <strong>personagens</strong> e <strong>eventos </strong> baseado na data de modificação
+            diretamente na plataforma da Marvel.
           </li>
         </ul>
       </section>
@@ -39,15 +43,14 @@ const Dashboard: React.FC = () => {
       </section>
       <section className="project-advantages">
         <h2>Diferenciais</h2>
-        <p>
-          A estrutura modular permite fácil manutenção e escalabilidade.
-          O uso da API da Marvel oferece uma vasta gama de dados, tornando o projeto interessante
-          para os fãs de quadrinhos e super-heróis.
-        </p>
-        <p>
-          Conceitos modernos de desenvolvimento front-end foram aplicados, como o consumo de APIs RESTful
-          e manipulação de dados dinâmicos.
-        </p>
+        <ul>
+          <li>
+            A estrutura modular permite fácil manutenção e escalabilidade.
+          </li>
+          <li>
+            O design único possibilita a integração de animações para deixar a experiência mais gamificada.
+          </li>
+        </ul>
       </section>
     </div>
   );

@@ -13,3 +13,9 @@ $orange-1: rgb(199, 125, 29);
 $pink-1: rgb(146, 39, 57);
 $gray-1: rgb(68, 75, 74);
 $cyan-1: rgb(3, 65, 54);
+
+@mixin centerFlex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

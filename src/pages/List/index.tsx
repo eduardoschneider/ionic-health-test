@@ -18,16 +18,16 @@ const List: React.FC = () => {
   const [startDate, setStartDate] = React.useState<Date | null>(null);
 
   /* PAGINATOR */
+  const [totalPages, setTotalPages] = React.useState<number>(1);
   const [currentPage, setCurrentPage] = React.useState<number>(() => {
     const params = new URLSearchParams(location.search);
     const pageFromUrl = parseInt(params.get('page') || '1', 10);
     return pageFromUrl;
   });
-  const [totalPages, setTotalPages] = React.useState(1);
   /*           */
 
-  const [isLoading, setIsLoading] = React.useState(false);
-  
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
   //Ativar debounce/Forçar limpeza completa
   const [_, commit] = React.useState<{}>({});
 
@@ -66,7 +66,7 @@ const List: React.FC = () => {
     const handler = setTimeout(() => {
       if (search !== '')
         updateURLParams('search', search);
-      
+
       if (startDate)
         updateURLParams('modified', startDate.toLocaleDateString('en-US'));
 
@@ -77,23 +77,23 @@ const List: React.FC = () => {
 
     }, 1000);
 
-    return () => {clearTimeout(handler);};
-    
+    return () => { clearTimeout(handler); };
+
   }, [search, startDate]);
 
   /* Busca sempre que a URL é alterada (filtro, página)*/
   React.useEffect(() => {
 
     const pageFromUrl = parseInt(getURLParam('page') || '1', 10);
-    const searchFromUrl = getURLParam('search')  || '';
-    const modifiedFromUrl = getURLParam('modified')  || '';
+    const searchFromUrl = getURLParam('search') || '';
+    const modifiedFromUrl = getURLParam('modified') || '';
     fetchItems(pageFromUrl, searchFromUrl, modifiedFromUrl);
 
   }, [location.search, location.pathname, fetchItems, _]);
 
-  /* Atualiza o conteúdo quando muda de contexto */
+  /* Atualiza o conteúdo quando muda de contexto, mas sem perder a página */
   React.useEffect(() => {
-    setCurrentPage(1);
+    setCurrentPage(parseInt(getURLParam('page') ?? '1', 10));
     setSearch('');
   }, [location.pathname]);
 
@@ -103,13 +103,13 @@ const List: React.FC = () => {
       <div className="search">
         <label>Modificado desde:</label>
         <DatePicker className="modified-input" dateFormat="MM/dd/yyyy" selected={startDate} onChange={(date: any) => setStartDate(date)} />
-        <input className="search-input" disabled={isLoading} value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar por nome/título..." />
+        <input className="search-input" disabled={isLoading} value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar por palavra-chave..." />
         <button className="reset-button" onClick={clearSearch}>Limpar busca</button>
       </div>
 
       <span className="search-result">
-        {getURLParam('search') && `Resultados que começam com "${getURLParam('search')}"`}
-        {getURLParam('modified') && `e foram alterados desde ${getURLParam('modified')}`}
+        {getURLParam('search') && `Começam com: "${getURLParam('search')}"`}
+        {getURLParam('modified') && `- Alterados desde: ${getURLParam('modified')}`}
       </span>
 
       <div className="card-list">
