@@ -16,4 +16,4 @@ const Button: React.FC<ButtonProps> = ({ onClick, children, type = 'button', dis
   );
 };
 
-export default React.memo(Button);
+export default Button;
