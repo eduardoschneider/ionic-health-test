@@ -10,3 +10,13 @@ import { AxiosResponse } from 'axios';
       throw error;
     }
   };
+
+  export const getSpecificCharacter = async (id: any): Promise<AxiosResponse<any>> => {
+    try {
+      const response = await MarvelApi.get('characters/' + id);
+      return response.data;
+    } catch (error) {
+      console.error('Erro ao fazer o GET:', error);
+      throw error;
+    }
+  };

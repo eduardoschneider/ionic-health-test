@@ -9,3 +9,8 @@ export const deleteURLParams = (param: string): void => {
     params.delete(param);
     window.history.replaceState(null, '', `${location.pathname}?${params.toString()}`);
 };
+
+export const getURLParam = (param: string): string | null => {
+    const params = new URLSearchParams(location.search);
+    return params.get(param);
+};

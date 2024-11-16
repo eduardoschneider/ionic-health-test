@@ -1,8 +1,56 @@
-.container {
-    width: 100vw;
-    height: 100vh;
+@use '@utils/colors' as *;
+
+.character-profile {
+    background-color: green;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgb(247, 243, 237);
+    height: 100%;
+
+    .information {
+        background-color: blue;
+        width: 20%;
+        height: calc(100% - 20px);
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-direction: column;
+        padding-top:20px;
+        color: white;
+
+        .name {
+            margin-top: 10px;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .description {
+            text-align: center;
+            font-size: 12px;
+            padding: 10px;
+        }
+
+        img {
+            width: 150px;
+            border-radius: 100%;
+        }
+
+        .modified {
+            background-color:$purple-1;
+            padding: 7px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            line-height: 10px;
+            font-weight: bold;
+
+             a {
+                font-weight: lighter;
+                padding:2px;
+                font-size: 10px;
+                line-height: 5px;
+                text-align: center;
+             }
+        }
+    }
 }
