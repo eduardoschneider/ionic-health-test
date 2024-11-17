@@ -101,8 +101,12 @@ const List: React.FC = () => {
 
       <div className="search">
         <label>Modificado desde:</label>
-        <DatePicker className="modified-input" disabled={isLoading} dateFormat="MM/dd/yyyy" selected={startDate} onChange={(date: any) => setStartDate(date)} />
-        <input className="search-input" disabled={isLoading} value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Buscar por palavra-chave..." />
+        <DatePicker className="modified-input" disabled={isLoading} dateFormat="MM/dd/yyyy" placeholderText='--/--/----'
+          selected={startDate} onChange={(date: any) => setStartDate(date)} />
+
+        <input className="search-input" disabled={isLoading} value={search} onChange={(e) => setSearch(e.target.value)}
+          placeholder="Buscar por palavra-chave..." />
+
         <button className="reset-button" onClick={clearSearch}>Limpar busca</button>
       </div>
 
