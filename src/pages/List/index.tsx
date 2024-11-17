@@ -24,7 +24,6 @@ const List: React.FC = () => {
     const pageFromUrl = parseInt(params.get('page') || '1', 10);
     return pageFromUrl;
   });
-  /*           */
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
