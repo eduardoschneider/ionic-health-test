@@ -72,7 +72,7 @@ const Details: React.FC = () => {
 
         <span className="modified">
           <a>Última modificação</a> <br />
-          {format(parseISO(item.modified), 'dd/MM/yyyy HH:mm')}
+          {item && format(parseISO(item?.modified), 'dd/MM/yyyy HH:mm')}
         </span>
       </div>
 
